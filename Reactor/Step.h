@@ -14,17 +14,12 @@ public:
   void addChild(const StepPtr stepPtr);
   void performTask();
 
-  bool canStart() const;
-  size_t getRemainingParentSteps() const { return m_nRemainingParentSteps; }
+  size_t getNumParentSteps() const { return m_nParentSteps; }
   std::vector<StepPtr> getChildren() const { return m_children; }
   std::string getName() const { return m_name; }
 
-protected:
-  void addParentStep();
-  void removeParentStep();
-
 private:
-  size_t m_nRemainingParentSteps;
+  size_t m_nParentSteps;
   std::string m_name;
   std::vector<StepPtr> m_children;
 };
