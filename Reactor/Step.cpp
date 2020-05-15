@@ -4,6 +4,9 @@
 Step::Step(const std::string &name) : m_name(name), m_nRemainingParentSteps(0) {}
 
 void Step::addChild(const StepPtr stepPtr) {
+  if (stepPtr == nullptr)
+    return;
+
   m_children.push_back(stepPtr);
   stepPtr->addParentStep();
 }
