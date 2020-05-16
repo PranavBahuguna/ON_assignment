@@ -11,9 +11,12 @@ Cursor::Cursor(const Graph &graph) : m_graph(graph) {
 
 // From a given step, attempts to move the cursor to all following child steps
 void Cursor::move(size_t index) {
-  if (!m_graph.isStepIndexInRange(index))
-    throw std::invalid_argument(
-        "Error, the cursor's current locations do not contain the supplied step.");
+  // Validate the given index
+  if (!m_graph.isIndexInRange(index))
+    throw std::invalid_argument("Step index (" + std::to_string(index) + ") out of range.");
+  if (m_curSteps.find(index) == m_curSteps.end())
+    throw std::invalid_argument("Cursor is not currently located at step index (" +
+                                std::to_string(index) + ").");
 
   // Remove current step
   m_curSteps.erase(index);

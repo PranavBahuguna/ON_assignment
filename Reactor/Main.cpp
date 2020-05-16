@@ -7,13 +7,13 @@
 int main() {
   try {
     // Create and link workflow graph
-    Graph graph(6);
-    graph.addStep(1, "Add Reagent 1");
-    graph.addStep(2, "Add Reagent 2", { 1 });
-    graph.addStep(3, "Preheat Heater", { 2 });
-    graph.addStep(4, "Mix Reagents", { 2 });
-    graph.addStep(5, "Heat Sample", { 3, 4 });
-    graph.addStep(6, "Extract Sample", { 5 });
+    Graph graph;
+    graph.addStep("Add Reagent 1");
+    graph.addStep("Add Reagent 2", { 1 });
+    graph.addStep("Preheat Heater", { 2 });
+    graph.addStep("Mix Reagents", { 2 });
+    graph.addStep("Heat Sample", { 3, 4 });
+    graph.addStep("Extract Sample", { 5 });
 
     Cursor cursor(graph);
     cursor.move(1);
