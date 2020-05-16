@@ -1,28 +1,22 @@
 #include "Cursor.h"
 #include "Step.h"
+#include "Graph.h"
 
 #include <Windows.h>
 
 int main() {
   try {
-    // Create workflow steps and link together
-    StepPtr ws1 = std::make_shared<Step>("Add Reagent 1");
-    StepPtr ws2 = std::make_shared<Step>("Add Reagent 2");
-    StepPtr ws3 = std::make_shared<Step>("Preheat Heater");
-    StepPtr ws4 = std::make_shared<Step>("Mix Reagents");
-    StepPtr ws5 = std::make_shared<Step>("Heat Sample");
-    StepPtr ws6 = std::make_shared<Step>("Extract Sample");
+    // Create and link workflow graph
+    Graph graph(6);
+    graph.addStep(1, "Add Reagent 1");
+    graph.addStep(2, "Add Reagent 2", { 1 });
+    graph.addStep(3, "Preheat Heater", { 2 });
+    graph.addStep(4, "Mix Reagents", { 2 });
+    graph.addStep(5, "Heat Sample", { 3, 4 });
+    graph.addStep(6, "Extract Sample", { 5 });
 
-    ws1->addChild(ws2);
-    ws2->addChild(ws3);
-    ws2->addChild(ws4);
-    ws3->addChild(ws5);
-    ws4->addChild(ws5);
-    ws5->addChild(ws6);
-
-    Cursor cursor(ws1);
-    ws1->performTask();
-    cursor.move(ws1);
+    Cursor cursor(graph);
+    cursor.move(1);
 
   } catch (std::exception &e) {
     printf(e.what());
