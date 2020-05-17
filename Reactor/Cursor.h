@@ -12,7 +12,9 @@ public:
   Cursor(const Graph &graph);
 
   std::unordered_set<size_t> getSteps() { return m_curSteps; }
-  void move(size_t index);
+  std::vector<size_t> move(size_t index);
+
+  bool hasLocationAt(size_t index) const;
 
 private:
   const Graph m_graph;

@@ -12,7 +12,8 @@ class Step {
 public:
   Step(const std::string &name);
 
-  void performTask();
+  void start();
+  std::string getName() { return m_name; }
 
 private:
   std::string m_name;

@@ -3,23 +3,22 @@
 #include <stdexcept>
 
 Cursor::Cursor(const Graph &graph) : m_graph(graph) {
-  for (size_t root : m_graph.getRoots()) {
-    m_curSteps.insert(root);
-    m_visited[root] = 0;
-  }
+  m_curSteps.insert(0);
+  m_visited[0] = 0;
 }
 
 // From a given step, attempts to move the cursor to all following child steps
-void Cursor::move(size_t index) {
+std::vector<size_t> Cursor::move(size_t index) {
   // Validate the given index
   if (!m_graph.isIndexInRange(index))
     throw std::invalid_argument("Step index (" + std::to_string(index) + ") out of range.");
-  if (m_curSteps.find(index) == m_curSteps.end())
-    throw std::invalid_argument("Cursor is not currently located at step index (" +
+  if (!hasLocationAt(index))
+    throw std::invalid_argument("Cursor does not currently hold a location at step index (" +
                                 std::to_string(index) + ").");
 
   // Remove current step
   m_curSteps.erase(index);
+  std::vector<size_t> newSteps;
 
   // Try visiting all child steps
   for (size_t childIdx : m_graph.getAdj(index)) {
@@ -31,7 +30,16 @@ void Cursor::move(size_t index) {
     m_visited[childIdx] = numBlocking - 1;
 
     // If there are no more blocking steps left for the child, add to current held steps
-    if (m_visited[childIdx] == 0)
+    if (m_visited[childIdx] == 0) {
       m_curSteps.insert(childIdx);
+      newSteps.push_back(childIdx);
+    }
   }
+
+  return newSteps; // return the newly added steps we can reach now
+}
+
+// Checks if the cursor currently holds a location at the given index
+bool Cursor::hasLocationAt(size_t index) const {
+  return m_curSteps.find(index) != m_curSteps.end();
 }

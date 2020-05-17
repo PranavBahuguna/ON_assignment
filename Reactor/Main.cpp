@@ -1,6 +1,5 @@
-#include "Cursor.h"
 #include "Graph.h"
-#include "Step.h"
+#include "Process.h"
 
 #include <Windows.h>
 
@@ -15,8 +14,8 @@ int main() {
     graph.addStep("Heat Sample", {3, 4});
     graph.addStep("Extract Sample", {5});
 
-    Cursor cursor(graph);
-    cursor.move(1);
+    Process process(graph);
+    process.start();
 
   } catch (std::exception &e) {
     printf(e.what());
