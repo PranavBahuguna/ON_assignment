@@ -3,20 +3,14 @@
 #include "Step.h"
 // clang-format on
 
-/*
 TEST(StepTest, Create) {
-  // Creating steps with non-unique names should fail
-  StepPtr step01;
-  StepPtr step02;
-  StepPtr step01_duplicate;
-
-  ASSERT_NO_THROW(step01 = std::make_shared<Step>("step01"));
-  ASSERT_NO_THROW(step02 = std::make_shared<Step>("step02"));
+  // Creating steps with empty names should fail
+  ASSERT_NO_THROW(Step stepNonEmptyName("step01"));
 
   try {
-    step01_duplicate = std::make_shared<Step>("step01");
+    Step stepEmptyName("");
     FAIL();
   } catch (std::invalid_argument &err) {
-    ASSERT_STREQ("Error, step (step01) already exists.", err.what());
+    ASSERT_STREQ("Step name must not be empty.", err.what());
   }
-}*/
+}

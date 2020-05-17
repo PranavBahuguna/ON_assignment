@@ -4,11 +4,13 @@
 #include <stdexcept>
 
 Graph::Graph() {
+  // Initialise the root (0) index, all subsequent steps are indexed from 1
   m_steps.push_back(nullptr);
   m_nParents.push_back(0);
   m_adjList.push_back({});
 }
 
+// Add a new step to the graph
 void Graph::addStep(const std::string &name, const std::vector<size_t> &parents) {
   size_t index = m_steps.size();
   m_steps.push_back(std::make_shared<Step>(name));

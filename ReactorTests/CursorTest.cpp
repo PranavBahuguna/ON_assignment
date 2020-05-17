@@ -5,12 +5,12 @@
 // clang-format on
 
 namespace {
-static Graph graph;
 static Cursor *cursor;
 
 class CursorTest : public ::testing::Test {
 protected:
   static void SetUpTestCase() {
+    Graph graph;
     graph.addStep("Add Reagent 1");
     graph.addStep("Add Reagent 2", {1});
     graph.addStep("Preheat Heater", {2});

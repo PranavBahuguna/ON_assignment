@@ -72,12 +72,12 @@ TEST_F(GraphTest, AddChildNode) {
   EXPECT_EQ(graph->getNumParents(8), 2);
 
   // Each parent's adjacent child list should contain the new root index
-  auto children01 = graph->getAdj(1);
+  auto &children01 = graph->getAdj(1);
   EXPECT_EQ(children01.size(), 2);
   EXPECT_EQ(children01[0], 2);
   EXPECT_EQ(children01[1], 8);
 
-  auto children07 = graph->getAdj(7);
+  auto &children07 = graph->getAdj(7);
   EXPECT_EQ(children07.size(), 1);
   EXPECT_EQ(children07[0], 8);
 }

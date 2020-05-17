@@ -1,6 +1,6 @@
 #include "Cursor.h"
-#include "Step.h"
 #include "Graph.h"
+#include "Step.h"
 
 #include <Windows.h>
 
@@ -9,11 +9,11 @@ int main() {
     // Create and link workflow graph
     Graph graph;
     graph.addStep("Add Reagent 1");
-    graph.addStep("Add Reagent 2", { 1 });
-    graph.addStep("Preheat Heater", { 2 });
-    graph.addStep("Mix Reagents", { 2 });
-    graph.addStep("Heat Sample", { 3, 4 });
-    graph.addStep("Extract Sample", { 5 });
+    graph.addStep("Add Reagent 2", {1});
+    graph.addStep("Preheat Heater", {2});
+    graph.addStep("Mix Reagents", {2});
+    graph.addStep("Heat Sample", {3, 4});
+    graph.addStep("Extract Sample", {5});
 
     Cursor cursor(graph);
     cursor.move(1);
