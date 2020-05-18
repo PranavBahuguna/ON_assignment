@@ -7,7 +7,7 @@ int main() {
   try {
     // Create and link workflow graph
     Graph graph;
-    graph.addStep("Add Reagent 1");
+    graph.addStep("Add Reagent 1", {0});
     graph.addStep("Add Reagent 2", {1});
     graph.addStep("Preheat Heater", {2});
     graph.addStep("Mix Reagents", {2});

@@ -10,7 +10,7 @@ class GraphTest : public ::testing::Test {
 protected:
   static void SetUpTestCase() {
     graph = new Graph();
-    graph->addStep("Add Reagent 1");
+    graph->addStep("Add Reagent 1", {0});
     graph->addStep("Add Reagent 2", {1});
     graph->addStep("Preheat Heater", {2});
     graph->addStep("Mix Reagents", {2});
@@ -22,7 +22,10 @@ protected:
 };
 
 TEST_F(GraphTest, StepIndexValidation) {
-  // Can access step indices contained with graph range (1 - 6)
+  // Can access steps contained with graph range (0 - 6)
+  EXPECT_EQ(graph->getNumSteps(), 6);
+
+  ASSERT_NO_THROW(graph->getStep(0));
   ASSERT_NO_THROW(graph->getStep(1));
   ASSERT_NO_THROW(graph->getStep(2));
   ASSERT_NO_THROW(graph->getStep(3));
@@ -30,14 +33,7 @@ TEST_F(GraphTest, StepIndexValidation) {
   ASSERT_NO_THROW(graph->getStep(5));
   ASSERT_NO_THROW(graph->getStep(6));
 
-  // Cannot access 0 index or indices higher than maximum range
-  try {
-    graph->getStep(0);
-    FAIL();
-  } catch (std::invalid_argument &err) {
-    ASSERT_STREQ("Step index (0) out of range.", err.what());
-  }
-
+  // Cannot access indices higher than maximum range
   try {
     graph->getStep(7);
     FAIL();
@@ -47,14 +43,12 @@ TEST_F(GraphTest, StepIndexValidation) {
 }
 
 TEST_F(GraphTest, AddRootNode) {
-  // Adding a step without at least one parent will make it a root node
-  ASSERT_NO_THROW(graph->addStep("New root node"));
-
-  EXPECT_TRUE(graph->isIndexInRange(7));
-  EXPECT_EQ(graph->getNumParents(7), 0);
+  // Adding a step with a parent at index 0 makes it a root node with a single parent
+  ASSERT_NO_THROW(graph->addStep("New root node", {0}));
+  EXPECT_EQ(graph->getNumParents(7), 1);
 
   // Root adjacent child list should contain the new root index
-  auto roots = graph->getRoots();
+  auto roots = graph->getAdj(0);
   EXPECT_EQ(roots.size(), 2);
   EXPECT_EQ(roots[0], 1);
   EXPECT_EQ(roots[1], 7);
@@ -67,8 +61,6 @@ TEST_F(GraphTest, AddRootNode) {
 TEST_F(GraphTest, AddChildNode) {
   // Adding a step without at least one parent will make it a child node
   ASSERT_NO_THROW(graph->addStep("New child node", {1, 7}));
-
-  EXPECT_TRUE(graph->isIndexInRange(8));
   EXPECT_EQ(graph->getNumParents(8), 2);
 
   // Each parent's adjacent child list should contain the new root index

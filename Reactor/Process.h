@@ -17,5 +17,4 @@ private:
 
   Cursor m_cursor;
   const Graph m_graph;
-  std::queue<size_t> m_indexQueue;
 };

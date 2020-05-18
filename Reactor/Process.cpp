@@ -1,18 +1,10 @@
 #include "Process.h"
 
-#include <queue>
 #include <thread>
 
 Process::Process(const Graph &graph) : m_graph(graph), m_cursor(graph) {}
 
 void Process::start() {
-  // At least one step in the graph is required to start the process
-  size_t numSteps = m_graph.getNumSteps();
-  if (numSteps == 0) {
-    printf("Process graph has 0 steps, cannot start.\n");
-    return;
-  }
-
   printf("Starting process...\n");
   startTask(0);
   printf("Process completed.\n");
