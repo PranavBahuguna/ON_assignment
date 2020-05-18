@@ -12,7 +12,6 @@ public:
   Cursor(const Graph &graph);
 
   std::vector<size_t> move(size_t index);
-  bool hasLocationAt(size_t index) const;
 
 private:
   const Graph m_graph;

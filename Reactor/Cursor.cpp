@@ -10,9 +10,7 @@ Cursor::Cursor(const Graph &graph) : m_graph(graph) {
 // From a given step, attempts to move the cursor to all following child steps
 std::vector<size_t> Cursor::move(size_t index) {
   // Validate the given index
-  if (index > m_graph.getNumSteps())
-    throw std::invalid_argument("Step index (" + std::to_string(index) + ") out of range.");
-  if (!hasLocationAt(index))
+  if (m_curIndices.find(index) == m_curIndices.end())
     throw std::invalid_argument("Cursor does not currently hold a location at step index (" +
                                 std::to_string(index) + ").");
 
@@ -37,9 +35,4 @@ std::vector<size_t> Cursor::move(size_t index) {
   }
 
   return newIndices; // return the newly added steps indices we can reach now
-}
-
-// Checks if the cursor currently holds a location at the given index
-bool Cursor::hasLocationAt(size_t index) const {
-  return m_curIndices.find(index) != m_curIndices.end();
 }

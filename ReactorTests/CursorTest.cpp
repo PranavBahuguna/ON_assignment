@@ -35,14 +35,6 @@ TEST_F(CursorTest, CursorMove) {
 }
 
 TEST_F(CursorTest, CursorMoveFromInvalidIndexFails) {
-  // Cannot access indices higher than maximum range
-  try {
-    cursor->move(7);
-    FAIL();
-  } catch (std::invalid_argument &err) {
-    ASSERT_STREQ("Step index (7) out of range.", err.what());
-  }
-
   // Cannot access indices the cursor isn't currently located at
   try {
     cursor->move(2);
