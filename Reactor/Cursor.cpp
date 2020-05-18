@@ -9,6 +9,8 @@ Cursor::Cursor(const Graph &graph) : m_graph(graph) {
 
 // From a given step, attempts to move the cursor to all following child steps
 std::vector<size_t> Cursor::move(size_t index) {
+  std::lock_guard<std::mutex> lock(m_mutex);
+
   // Validate the given index
   if (m_curIndices.find(index) == m_curIndices.end())
     throw std::invalid_argument("Cursor does not currently hold a location at step index (" +

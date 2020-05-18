@@ -1,7 +1,6 @@
 // clang-format off
 #include "pch.h"
-#include "Cursor.h"
-#include "Graph.h"
+#include "Process.h"
 // clang-format on
 
 namespace {

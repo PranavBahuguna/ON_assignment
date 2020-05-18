@@ -2,9 +2,6 @@
 
 #include "Cursor.h"
 #include "Graph.h"
-#include "Step.h"
-
-#include <queue>
 
 class Process {
 public:

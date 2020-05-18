@@ -9,7 +9,7 @@ Graph::Graph() {
   // Initialise the root (0) index, all subsequent steps are indexed from 1
   m_steps.push_back(nullptr);
   m_nParents.push_back(0);
-  m_adjList.push_back({});
+  m_adjList.emplace_back();
 }
 
 // Add a new step to the graph
@@ -28,7 +28,7 @@ void Graph::addStep(const std::string &name, const Step::Type &type,
 
   // Update graph data
   m_nParents.push_back(parents.size());
-  m_adjList.push_back({});
+  m_adjList.emplace_back();
 
   switch (type) {
   case Step::Type::AUTOMATIC:

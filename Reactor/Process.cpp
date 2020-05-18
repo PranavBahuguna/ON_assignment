@@ -24,7 +24,7 @@ void Process::startTask(size_t index) {
   auto newIndices = m_cursor.move(index);
   
   for (size_t newIndex : newIndices)
-    threads.push_back(std::thread(&Process::startTask, this, newIndex));
+    threads.emplace_back(&Process::startTask, this, newIndex);
 
   for (auto &thread : threads)
     thread.join();
