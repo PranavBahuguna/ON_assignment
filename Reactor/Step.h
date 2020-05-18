@@ -12,9 +12,9 @@ public:
 
   enum class Type { MANUAL, AUTOMATIC };
 
-  void start();
+  virtual void start() const = 0;
   std::string getName() { return m_name; }
 
-private:
+protected:
   std::string m_name;
 };

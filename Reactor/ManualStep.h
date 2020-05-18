@@ -6,5 +6,5 @@ class ManualStep : public Step {
 public:
   ManualStep(const std::string &name);
 
-private:
+  void start() const override;
 };
