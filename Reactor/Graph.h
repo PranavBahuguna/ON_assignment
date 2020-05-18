@@ -9,7 +9,7 @@ class Graph {
 public:
   Graph();
 
-  void addStep(const std::string &name, const std::vector<size_t> &parents);
+  void addStep(const std::string &name, const Step::Type &type, const std::vector<size_t> &parents);
 
   StepPtr getStep(size_t index) const;
   const std::vector<size_t> &getAdj(size_t index) const;

@@ -1,4 +1,6 @@
 #include "Graph.h"
+#include "AutomaticStep.h"
+#include "ManualStep.h"
 
 #include <memory>
 #include <stdexcept>
@@ -11,7 +13,8 @@ Graph::Graph() {
 }
 
 // Add a new step to the graph
-void Graph::addStep(const std::string &name, const std::vector<size_t> &parents) {
+void Graph::addStep(const std::string &name, const Step::Type &type,
+                    const std::vector<size_t> &parents) {
   if (parents.empty())
     throw std::invalid_argument("Zero parent indices supplied, at least one must be given.");
 
@@ -23,9 +26,18 @@ void Graph::addStep(const std::string &name, const std::vector<size_t> &parents)
     m_adjList[pIndex].push_back(index);
   }
 
+  // Update graph data
   m_nParents.push_back(parents.size());
-  m_steps.push_back(std::make_shared<Step>(name));
   m_adjList.push_back({});
+
+  switch (type) {
+  case Step::Type::AUTOMATIC:
+    m_steps.push_back(std::make_shared<AutomaticStep>(name));
+    break;
+  case Step::Type::MANUAL:
+    m_steps.push_back(std::make_shared<ManualStep>(name));
+    break;
+  }
 }
 
 // Gets the step at the given index
@@ -48,9 +60,6 @@ size_t Graph::getNumParents(size_t index) const {
 
   return m_nParents[index];
 }
-
-// Checks if a given step index is within the bounds of the graph
-//bool Graph::isIndexInRange(size_t index) const { return index < m_steps.size(); }
 
 // Returns the number of steps in the graph
 size_t Graph::getNumSteps() const { return m_steps.size() - 1; }

@@ -11,12 +11,12 @@ class CursorTest : public ::testing::Test {
 protected:
   static void SetUpTestCase() {
     Graph graph;
-    graph.addStep("Add Reagent 1", {0});
-    graph.addStep("Add Reagent 2", {1});
-    graph.addStep("Preheat Heater", {2});
-    graph.addStep("Mix Reagents", {2});
-    graph.addStep("Heat Sample", {3, 4});
-    graph.addStep("Extract Sample", {5});
+    graph.addStep("Add Reagent 1", Step::Type::MANUAL, {0});
+    graph.addStep("Add Reagent 2", Step::Type::MANUAL, {1});
+    graph.addStep("Preheat Heater", Step::Type::AUTOMATIC, {2});
+    graph.addStep("Mix Reagents", Step::Type::AUTOMATIC, {2});
+    graph.addStep("Heat Sample", Step::Type::AUTOMATIC, {3, 4});
+    graph.addStep("Extract Sample", Step::Type::MANUAL, {5});
 
     cursor = new Cursor(graph);
   }

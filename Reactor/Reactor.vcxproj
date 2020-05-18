@@ -148,15 +148,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AutomaticStep.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ManualStep.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="Step.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutomaticStep.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="ManualStep.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Step.h" />
   </ItemGroup>

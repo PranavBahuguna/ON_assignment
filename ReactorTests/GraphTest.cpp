@@ -10,12 +10,12 @@ class GraphTest : public ::testing::Test {
 protected:
   static void SetUpTestCase() {
     graph = new Graph();
-    graph->addStep("Add Reagent 1", {0});
-    graph->addStep("Add Reagent 2", {1});
-    graph->addStep("Preheat Heater", {2});
-    graph->addStep("Mix Reagents", {2});
-    graph->addStep("Heat Sample", {3, 4});
-    graph->addStep("Extract Sample", {5});
+    graph->addStep("Add Reagent 1", Step::Type::MANUAL, {0});
+    graph->addStep("Add Reagent 2", Step::Type::MANUAL, {1});
+    graph->addStep("Preheat Heater", Step::Type::AUTOMATIC, {2});
+    graph->addStep("Mix Reagents", Step::Type::AUTOMATIC, {2});
+    graph->addStep("Heat Sample", Step::Type::AUTOMATIC, {3, 4});
+    graph->addStep("Extract Sample", Step::Type::MANUAL, {5});
   }
 
   static void TearDownTestCase() { delete graph; }
@@ -44,7 +44,7 @@ TEST_F(GraphTest, StepIndexValidation) {
 
 TEST_F(GraphTest, AddRootNode) {
   // Adding a step with a parent at index 0 makes it a root node with a single parent
-  ASSERT_NO_THROW(graph->addStep("New root node", {0}));
+  ASSERT_NO_THROW(graph->addStep("New root node", Step::Type::AUTOMATIC, {0}));
   EXPECT_EQ(graph->getNumParents(7), 1);
 
   // Root adjacent child list should contain the new root index
@@ -60,7 +60,7 @@ TEST_F(GraphTest, AddRootNode) {
 
 TEST_F(GraphTest, AddChildNode) {
   // Adding a step without at least one parent will make it a child node
-  ASSERT_NO_THROW(graph->addStep("New child node", {1, 7}));
+  ASSERT_NO_THROW(graph->addStep("New child node", Step::Type::AUTOMATIC, {1, 7}));
   EXPECT_EQ(graph->getNumParents(8), 2);
 
   // Each parent's adjacent child list should contain the new root index
